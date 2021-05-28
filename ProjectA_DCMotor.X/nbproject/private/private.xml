@@ -3,12 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Samuel/Desktop/New%20Folder/ProjectA_DCMotor.X/Src/main.c</file>
-            <file>file:/C:/Users/Samuel/Desktop/New%20Folder/ProjectA_DCMotor.X/includes/Motor.h</file>
-            <file>file:/C:/Users/Samuel/Desktop/New%20Folder/ProjectA_DCMotor.X/Src/Motor.c</file>
-            <file>file:/C:/Users/Samuel/Desktop/New%20Folder/ProjectA_DCMotor.X/Src/timers.c</file>
-            <file>file:/C:/Users/Samuel/Desktop/New%20Folder/ProjectA_DCMotor.X/Src/pwm.c</file>
-            <file>file:/C:/Users/Samuel/Desktop/New%20Folder/ProjectA_DCMotor.X/Src/uart.c</file>
+            <file>file:/C:/Users/leand/OneDrive/Ambiente%20de%20Trabalho/SIE_Cod/SIE/ProjectA_DCMotor.X/includes/general.h</file>
+            <file>file:/C:/Users/leand/OneDrive/Ambiente%20de%20Trabalho/SIE_Cod/SIE/ProjectA_DCMotor.X/includes/external_int.h</file>
+            <file>file:/C:/Users/leand/OneDrive/Ambiente%20de%20Trabalho/SIE_Cod/SIE/ProjectA_DCMotor.X/Src/main.c</file>
+            <file>file:/C:/Users/leand/OneDrive/Ambiente%20de%20Trabalho/SIE_Cod/SIE/ProjectA_DCMotor.X/Src/external_int.c</file>
+            <file>file:/C:/Users/leand/OneDrive/Ambiente%20de%20Trabalho/SIE_Cod/SIE/ProjectA_DCMotor.X/Src/timers.c</file>
+            <file>file:/C:/Users/leand/OneDrive/Ambiente%20de%20Trabalho/SIE_Cod/SIE/ProjectA_DCMotor.X/Src/pwm.c</file>
+            <file>file:/C:/Users/leand/OneDrive/Ambiente%20de%20Trabalho/SIE_Cod/SIE/ProjectA_DCMotor.X/Src/general.c</file>
         </group>
     </open-files>
 </project-private>

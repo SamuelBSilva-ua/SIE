@@ -1,37 +1,46 @@
 #include "../includes/config_bits.h" 
-
+#include "../includes/pwm.h"
+#include "../includes/timers.h"
+#include "../includes/uart.h"
+#include "../includes/external_int.h"
 #include <xc.h>
 #include <stdint.h>
 
 
+void __ISR (_EXTERNAL_1_VECTOR, IPL5SRS) ExtInt1ISR(void)
+{
+    
+    IFS0bits.INT1IF = 0; // Reset int flag
+}
+
+
+
 int main(int argc, char** argv) {
     
-   
 
+    /* Set Interrupt Controller for multi-vector mode */
+    INTCONSET = _INTCON_MVEC_MASK;
     
-    TRISAbits.TRISA3 = 0;
+    /* Enable Interrupt Exceptions */
+    // set the CP0 status IE bit high to turn on interrupts globally
+    __builtin_enable_interrupts();
     
-    //Pin Config
-    TRISEbits.TRISE5 = 0;  //RE5 set as output - 1A l293
-    TRISEbits.TRISE6 = 0;  //RE6 set as output - 2A l293
-
-    TRISEbits.TRISE7 = 1;  //RE7 set as input  - Channel B Motor encoder
-    TRISEbits.TRISE8 = 1;  //RE8 set as input  - Channel A Motor encoder
     
-    Timer2Init(20000, 8); //frequency, prescaler
-    PWM1Init(2); //  PWM using timer 2
+    PinConfig(); //Init output and input pins
+    InitExternalInterrupt1(); //External interrupt inits
+    Timer2Init(20000, 8); //Set timer with frequency of 20kHz
+    PWM1Init(2); //  Run PWM with timer 2
+ 
     
+    //Init values:
+    PWM1_updateDutyCycle(50,2); //Set PWM to start with 50 duty-cycle
     
    
     while (1) {
-        PWM1_updateDutyCycle(50,2);
         
         PORTAbits.RA3 = !PORTAbits.RA3;
         
-       
-     
-       
-
+   
     }
 
     return (EXIT_SUCCESS);

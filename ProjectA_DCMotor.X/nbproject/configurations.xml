@@ -10,6 +10,7 @@
       <itemPath>includes/timers.h</itemPath>
       <itemPath>includes/Motor.h</itemPath>
       <itemPath>includes/general.h</itemPath>
+      <itemPath>includes/external_int.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -23,6 +24,8 @@
       <itemPath>Src/pwm.c</itemPath>
       <itemPath>Src/timers.c</itemPath>
       <itemPath>Src/Motor.c</itemPath>
+      <itemPath>Src/external_int.c</itemPath>
+      <itemPath>Src/general.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

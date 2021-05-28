@@ -11,5 +11,8 @@
 #define SYSCLK 80000000L
 #define PBCLK 40000000L
 
+
+void PinConfig(void);
+
 #endif	/* GENERAL_H */
 

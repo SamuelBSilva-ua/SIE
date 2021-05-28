@@ -38,6 +38,7 @@ int PWM1Init(uint8_t timer_number)
     
     /* Control registers */
     /* Section 16, Page 7, PWM datasheet*/
+    OC1CONbits.OCM=6; //set OC1 as PWM enable
     OC1CONbits.ON=0; //disable PWM to start configuration
     OC1CONbits.OC32=0; //16 bits time source
     
