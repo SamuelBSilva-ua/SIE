@@ -70,7 +70,13 @@ int UartInit(uint64_t pbclock, uint32_t br)
     U1STAbits.UTXISEL = 0; // Interrupt when TX buffer has at least 1 empty position
     U1STAbits.UTXINV = 0; // Idle logic value is 1
     
-    // Configuration done. Enable.   
+    //Interruption Configuration
+    IFS0bits.U1RXIF = 0;
+    IEC0bits.U1RXIE = 1;
+    IPC6bits.U1IP = 2;
+    IPC6bits.U1IS = 1;
+    
+    // Configuration done. Enable.
     U1AMODEbits.ON = 1;  
     U1STAbits.UTXEN = 1;
     U1STAbits.URXEN = 1;
@@ -140,6 +146,22 @@ void PutChar(uint8_t txChar)
 {
     while(U1STAbits.UTXBF); // wait for TX buffer to be empty
     U1ATXREG = txChar;
+}
+
+/********************************************************************
+* Function: 	PutSring()
+* Precondition: 
+* Input: 		*String
+* Output:		None
+* Side Effects:	None.
+* Overview:     Puts the data into UART tx reg for transmission.
+* Note:		 	None.
+********************************************************************/
+void PutString(uint8_t *string_val) {
+
+	while(*string_val != '\0') {
+		PutChar(*string_val++);
+	}
 }
 
 /***************************************End Of File*************************************/
