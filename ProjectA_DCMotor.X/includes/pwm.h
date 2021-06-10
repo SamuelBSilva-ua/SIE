@@ -22,6 +22,7 @@
 /* Functions */
 int PWM1Init(uint8_t timer_number);
 int PWM1_updateDutyCycle(uint8_t dutycycle,uint8_t timer_number);
+int PWM1_adjustment(int adjustment, uint8_t timer_number);
 
 #endif	/* PWM_H */
 

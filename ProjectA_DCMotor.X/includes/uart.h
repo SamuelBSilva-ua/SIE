@@ -34,6 +34,7 @@ int UartClose(void);
 int GetChar(uint8_t *byte);
 void PutChar(uint8_t txChar);
 void PutString(uint8_t *string); 
+void SendInteger(int integer_val);
 
 #endif
  

@@ -110,3 +110,35 @@ int PWM1_updateDutyCycle(uint8_t dutycycle,uint8_t timer_number)
 
     return PWM1_SUCCESS;
 }
+
+
+
+/********************************************************************
+* Function: 	PWM1_adjustment(int adjustment, uint8_t timer_number)
+* Precondition: 
+* Input:        adjustment value.
+ *              timer_number is the timer used, 2 or 3.
+* 
+* Returns:      PWM1_SUCCESS if success.
+*               PWM1_XXXX if error (check pwm.h)
+* 
+* Overview:     Initializes the PWM module.
+* 
+********************************************************************/	
+int PWM1_adjustment(int adjustment, uint8_t timer_number)
+{
+    
+      switch (timer_number){
+        case 2:
+            OC1RS=((PR2+1)+adjustment);
+            break;
+        case 3:
+            OC1RS=((PR3+1)+adjustment);
+            break;
+        default:
+            return PWM1_INVALID_TIMER; //Invalid timer for OC1
+            break;
+    }
+
+    return PWM1_SUCCESS;
+}

@@ -13,6 +13,7 @@
 
 
 void PinConfig(void);
+void InterfaceMenu(void);
 
 #endif	/* GENERAL_H */
 

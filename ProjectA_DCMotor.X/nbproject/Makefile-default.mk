@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=Src/main.c Src/uart.c Src/pwm.c Src/timers.c Src/Motor.c Src/external_int.c Src/general.c
+SOURCEFILES_QUOTED_IF_SPACED=Src/main.c Src/uart.c Src/pwm.c Src/timers.c Src/Motor.c Src/external_int.c Src/general.c Src/PIController.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/Src/main.o ${OBJECTDIR}/Src/uart.o ${OBJECTDIR}/Src/pwm.o ${OBJECTDIR}/Src/timers.o ${OBJECTDIR}/Src/Motor.o ${OBJECTDIR}/Src/external_int.o ${OBJECTDIR}/Src/general.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/Src/main.o.d ${OBJECTDIR}/Src/uart.o.d ${OBJECTDIR}/Src/pwm.o.d ${OBJECTDIR}/Src/timers.o.d ${OBJECTDIR}/Src/Motor.o.d ${OBJECTDIR}/Src/external_int.o.d ${OBJECTDIR}/Src/general.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/Src/main.o ${OBJECTDIR}/Src/uart.o ${OBJECTDIR}/Src/pwm.o ${OBJECTDIR}/Src/timers.o ${OBJECTDIR}/Src/Motor.o ${OBJECTDIR}/Src/external_int.o ${OBJECTDIR}/Src/general.o ${OBJECTDIR}/Src/PIController.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/Src/main.o.d ${OBJECTDIR}/Src/uart.o.d ${OBJECTDIR}/Src/pwm.o.d ${OBJECTDIR}/Src/timers.o.d ${OBJECTDIR}/Src/Motor.o.d ${OBJECTDIR}/Src/external_int.o.d ${OBJECTDIR}/Src/general.o.d ${OBJECTDIR}/Src/PIController.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/Src/main.o ${OBJECTDIR}/Src/uart.o ${OBJECTDIR}/Src/pwm.o ${OBJECTDIR}/Src/timers.o ${OBJECTDIR}/Src/Motor.o ${OBJECTDIR}/Src/external_int.o ${OBJECTDIR}/Src/general.o
+OBJECTFILES=${OBJECTDIR}/Src/main.o ${OBJECTDIR}/Src/uart.o ${OBJECTDIR}/Src/pwm.o ${OBJECTDIR}/Src/timers.o ${OBJECTDIR}/Src/Motor.o ${OBJECTDIR}/Src/external_int.o ${OBJECTDIR}/Src/general.o ${OBJECTDIR}/Src/PIController.o
 
 # Source Files
-SOURCEFILES=Src/main.c Src/uart.c Src/pwm.c Src/timers.c Src/Motor.c Src/external_int.c Src/general.c
+SOURCEFILES=Src/main.c Src/uart.c Src/pwm.c Src/timers.c Src/Motor.c Src/external_int.c Src/general.c Src/PIController.c
 
 
 
@@ -107,90 +107,102 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/Src/main.o: Src/main.c  .generated_files/df66d23920f8d58c6a1a0b6b5f1bc52157af391a.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
+${OBJECTDIR}/Src/main.o: Src/main.c  .generated_files/82984786a93099cd0294266c4b79e688f094a8ca.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
 	@${MKDIR} "${OBJECTDIR}/Src" 
 	@${RM} ${OBJECTDIR}/Src/main.o.d 
 	@${RM} ${OBJECTDIR}/Src/main.o 
 	${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Src/main.o.d" -o ${OBJECTDIR}/Src/main.o Src/main.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
-${OBJECTDIR}/Src/uart.o: Src/uart.c  .generated_files/9a3fd95c06796ed4be01bccff4c4f9e2c24eb7ea.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
+${OBJECTDIR}/Src/uart.o: Src/uart.c  .generated_files/5b2da5a8d5946d4f032d9badecaa7901e44db725.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
 	@${MKDIR} "${OBJECTDIR}/Src" 
 	@${RM} ${OBJECTDIR}/Src/uart.o.d 
 	@${RM} ${OBJECTDIR}/Src/uart.o 
 	${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Src/uart.o.d" -o ${OBJECTDIR}/Src/uart.o Src/uart.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
-${OBJECTDIR}/Src/pwm.o: Src/pwm.c  .generated_files/fa6dc8b46f216f8437691932f9a7768cfa90d8b2.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
+${OBJECTDIR}/Src/pwm.o: Src/pwm.c  .generated_files/8b8f8d4633b8a276a4741ddbbbb67125973ac6c8.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
 	@${MKDIR} "${OBJECTDIR}/Src" 
 	@${RM} ${OBJECTDIR}/Src/pwm.o.d 
 	@${RM} ${OBJECTDIR}/Src/pwm.o 
 	${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Src/pwm.o.d" -o ${OBJECTDIR}/Src/pwm.o Src/pwm.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
-${OBJECTDIR}/Src/timers.o: Src/timers.c  .generated_files/d4dbf3477f9b2ebcfce2fd5307ae114a63dd8a41.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
+${OBJECTDIR}/Src/timers.o: Src/timers.c  .generated_files/edd94cd52e9e9f24003099f8ed7483a2ef9303d4.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
 	@${MKDIR} "${OBJECTDIR}/Src" 
 	@${RM} ${OBJECTDIR}/Src/timers.o.d 
 	@${RM} ${OBJECTDIR}/Src/timers.o 
 	${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Src/timers.o.d" -o ${OBJECTDIR}/Src/timers.o Src/timers.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
-${OBJECTDIR}/Src/Motor.o: Src/Motor.c  .generated_files/7bece319e3929c067d4abd3c8299442fb20c1aca.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
+${OBJECTDIR}/Src/Motor.o: Src/Motor.c  .generated_files/b314ebe36e67d96f851f604ada8bb3d8da794198.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
 	@${MKDIR} "${OBJECTDIR}/Src" 
 	@${RM} ${OBJECTDIR}/Src/Motor.o.d 
 	@${RM} ${OBJECTDIR}/Src/Motor.o 
 	${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Src/Motor.o.d" -o ${OBJECTDIR}/Src/Motor.o Src/Motor.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
-${OBJECTDIR}/Src/external_int.o: Src/external_int.c  .generated_files/d1edc56389725f2df24a3b1379c2475d41e3316c.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
+${OBJECTDIR}/Src/external_int.o: Src/external_int.c  .generated_files/2a71f3478a30a9a908887d40a6a6fafb09e33860.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
 	@${MKDIR} "${OBJECTDIR}/Src" 
 	@${RM} ${OBJECTDIR}/Src/external_int.o.d 
 	@${RM} ${OBJECTDIR}/Src/external_int.o 
 	${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Src/external_int.o.d" -o ${OBJECTDIR}/Src/external_int.o Src/external_int.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
-${OBJECTDIR}/Src/general.o: Src/general.c  .generated_files/37b67cb88b537e4ccbcbb0df88ee6e75f53ede8d.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
+${OBJECTDIR}/Src/general.o: Src/general.c  .generated_files/c3f5bf0f3601685540ffd6a86a91772c29e6145.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
 	@${MKDIR} "${OBJECTDIR}/Src" 
 	@${RM} ${OBJECTDIR}/Src/general.o.d 
 	@${RM} ${OBJECTDIR}/Src/general.o 
 	${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Src/general.o.d" -o ${OBJECTDIR}/Src/general.o Src/general.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
+${OBJECTDIR}/Src/PIController.o: Src/PIController.c  .generated_files/ac594330f2d69abec997523c152b3c2768874f2e.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
+	@${MKDIR} "${OBJECTDIR}/Src" 
+	@${RM} ${OBJECTDIR}/Src/PIController.o.d 
+	@${RM} ${OBJECTDIR}/Src/PIController.o 
+	${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Src/PIController.o.d" -o ${OBJECTDIR}/Src/PIController.o Src/PIController.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
+	
 else
-${OBJECTDIR}/Src/main.o: Src/main.c  .generated_files/254bdbf04cca517e656761138e7565c08162cda1.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
+${OBJECTDIR}/Src/main.o: Src/main.c  .generated_files/dec7c924f4116e4e878bedccb0401b29947310d4.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
 	@${MKDIR} "${OBJECTDIR}/Src" 
 	@${RM} ${OBJECTDIR}/Src/main.o.d 
 	@${RM} ${OBJECTDIR}/Src/main.o 
 	${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Src/main.o.d" -o ${OBJECTDIR}/Src/main.o Src/main.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
-${OBJECTDIR}/Src/uart.o: Src/uart.c  .generated_files/e3b9eda4f244a86484e589aab1c8d2e117fbd55a.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
+${OBJECTDIR}/Src/uart.o: Src/uart.c  .generated_files/69eda67751f358ec42513d214259d27d5e4f3aad.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
 	@${MKDIR} "${OBJECTDIR}/Src" 
 	@${RM} ${OBJECTDIR}/Src/uart.o.d 
 	@${RM} ${OBJECTDIR}/Src/uart.o 
 	${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Src/uart.o.d" -o ${OBJECTDIR}/Src/uart.o Src/uart.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
-${OBJECTDIR}/Src/pwm.o: Src/pwm.c  .generated_files/10df5f188aae63429b61510860a173db894dd67a.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
+${OBJECTDIR}/Src/pwm.o: Src/pwm.c  .generated_files/b132b045ee7a941aa2b45f385c6f2ff68f081ad0.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
 	@${MKDIR} "${OBJECTDIR}/Src" 
 	@${RM} ${OBJECTDIR}/Src/pwm.o.d 
 	@${RM} ${OBJECTDIR}/Src/pwm.o 
 	${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Src/pwm.o.d" -o ${OBJECTDIR}/Src/pwm.o Src/pwm.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
-${OBJECTDIR}/Src/timers.o: Src/timers.c  .generated_files/4a0c5ae89599c3f6c3bab1be71e7bfcf040d3096.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
+${OBJECTDIR}/Src/timers.o: Src/timers.c  .generated_files/acb55fe8b0a73dd2d5a8f814ca185b16142686b8.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
 	@${MKDIR} "${OBJECTDIR}/Src" 
 	@${RM} ${OBJECTDIR}/Src/timers.o.d 
 	@${RM} ${OBJECTDIR}/Src/timers.o 
 	${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Src/timers.o.d" -o ${OBJECTDIR}/Src/timers.o Src/timers.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
-${OBJECTDIR}/Src/Motor.o: Src/Motor.c  .generated_files/897b4b74a1095363f09b80845099522e19fb2d63.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
+${OBJECTDIR}/Src/Motor.o: Src/Motor.c  .generated_files/66b699cce34ec8beb9c7342c63009babd11a7734.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
 	@${MKDIR} "${OBJECTDIR}/Src" 
 	@${RM} ${OBJECTDIR}/Src/Motor.o.d 
 	@${RM} ${OBJECTDIR}/Src/Motor.o 
 	${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Src/Motor.o.d" -o ${OBJECTDIR}/Src/Motor.o Src/Motor.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
-${OBJECTDIR}/Src/external_int.o: Src/external_int.c  .generated_files/9568291c85206c90c6a4cdc99b8374670553f1a1.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
+${OBJECTDIR}/Src/external_int.o: Src/external_int.c  .generated_files/2384aeba50bd27185addffbdfa4e364153274563.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
 	@${MKDIR} "${OBJECTDIR}/Src" 
 	@${RM} ${OBJECTDIR}/Src/external_int.o.d 
 	@${RM} ${OBJECTDIR}/Src/external_int.o 
 	${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Src/external_int.o.d" -o ${OBJECTDIR}/Src/external_int.o Src/external_int.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
-${OBJECTDIR}/Src/general.o: Src/general.c  .generated_files/a44dc5451d4f9fcb4163ab2f8ba52b78a96966cc.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
+${OBJECTDIR}/Src/general.o: Src/general.c  .generated_files/1a9dccb5c3dbc4ece03e2f5105a68fe5278118f6.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
 	@${MKDIR} "${OBJECTDIR}/Src" 
 	@${RM} ${OBJECTDIR}/Src/general.o.d 
 	@${RM} ${OBJECTDIR}/Src/general.o 
 	${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Src/general.o.d" -o ${OBJECTDIR}/Src/general.o Src/general.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
+	
+${OBJECTDIR}/Src/PIController.o: Src/PIController.c  .generated_files/d330be01fa969e9c59d4eb08e2cdcbed820e1e6b.flag .generated_files/9c38dd73fa47c8727ca672a3ac38932765b77050.flag
+	@${MKDIR} "${OBJECTDIR}/Src" 
+	@${RM} ${OBJECTDIR}/Src/PIController.o.d 
+	@${RM} ${OBJECTDIR}/Src/PIController.o 
+	${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Src/PIController.o.d" -o ${OBJECTDIR}/Src/PIController.o Src/PIController.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  
 	
 endif
 

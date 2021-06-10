@@ -159,7 +159,9 @@ int Timer3Init(uint32_t frequency, uint16_t prescaler)
     PR3=(PBCLK/(frequency*prescaler))-1; //Timer period register
     
     /* Interruptions */
-    IEC0bits.T3IE = 0; //no interrupts (polling)
+    IEC0bits.T3IE = 1; //enable interrupts
+    IPC3bits.T3IP=4; //interrupt priority 4 (1 - lowest, 7- highest)
+    IPC3bits.INT3IS=1; //interrupt sub-priority 4 (1 - lowest, 7- highest)
     IFS0bits.T3IF = 0; //reset interrupt flag
     
     

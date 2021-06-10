@@ -20,6 +20,8 @@
 #include "../includes/uart.h"
 #include <xc.h>
 #include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 #include <stdint.h>
 
 /********************************************************************
@@ -149,7 +151,7 @@ void PutChar(uint8_t txChar)
 }
 
 /********************************************************************
-* Function: 	PutSring()
+* Function: 	PutString()
 * Precondition: 
 * Input: 		*String
 * Output:		None
@@ -164,4 +166,20 @@ void PutString(uint8_t *string_val) {
 	}
 }
 
+
+/********************************************************************
+* Function: 	SendInteger()
+* Precondition: 
+* Input: 		integer_val
+* Output:		None
+* Side Effects:	None.
+* Overview:     Send integer value to UART.
+* Note:		 	None.
+********************************************************************/
+void SendInteger(int integer_val) {
+
+    char buffer[10]; //10 char string (9+'\0')
+    itoa(buffer, integer_val, 10); //use itoa to convert integer to char and store on buffer
+    PutString(buffer);//send string through UART
+}
 /***************************************End Of File*************************************/
