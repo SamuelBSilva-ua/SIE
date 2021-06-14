@@ -173,7 +173,7 @@ void PutString(uint8_t *string_val) {
 * Input: 		integer_val
 * Output:		None
 * Side Effects:	None.
-* Overview:     Send integer value to UART.
+* Overview:     Send integer variable to UART.
 * Note:		 	None.
 ********************************************************************/
 void SendInteger(int integer_val) {
@@ -182,4 +182,5 @@ void SendInteger(int integer_val) {
     itoa(buffer, integer_val, 10); //use itoa to convert integer to char and store on buffer
     PutString(buffer);//send string through UART
 }
+
 /***************************************End Of File*************************************/

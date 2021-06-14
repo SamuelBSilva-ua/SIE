@@ -39,30 +39,32 @@
 #define KI_UPDATE 7
 
 /* PI Controller*/
-#define MINIMUM_KP 0
-#define MAXIMUM_KP 100
-#define MINIMUM_KI 0
-#define MAXIMUM_KI 100
+#define MINIMUM_KP 0.00
+#define MAXIMUM_KP 100.00
+#define MINIMUM_KI 0.00
+#define MAXIMUM_KI 100.00
 #define MINIMUM_RPM 10
 #define MAXIMUM_RPM 50
 #define H_SAMPLE 10
 
 /* From system */
-volatile uint8_t Ki;
-volatile uint8_t Kp;
+volatile float Ki;
+volatile float Kp;
 volatile uint8_t RPM;
 volatile uint8_t user_operation;
 volatile uint8_t UserOutputFlag;
 volatile uint32_t CountPulses;
 volatile float AnglePosition; 
-volatile uint8_t pre_validation;
+volatile uint8_t pre_validation_RPM;
+volatile float pre_validation_controller;
+volatile uint8_t MotorStatus;
 
 /* From user*/
-volatile uint8_t setKi;
-volatile uint8_t setKp;
+volatile float setKi;
+volatile float setKp;
 volatile uint8_t RPM_reference;
 volatile uint8_t DigitCount;
-char rcvDigit[5];
+char rcvDigit[7];
 
 void __ISR(UART1_VECTOR)UART1ISR(void);
 void __ISR (INT1_VECTOR) ExtInt1ISR(void);
@@ -88,6 +90,7 @@ int main(int argc, char** argv) {
     
     //Init values
     PWM1_updateDutyCycle(0,2); //Set PWM to start with 50 duty-cycle
+    MotorStatus=0;
     setRotationRight(); 
     setKi=0;
     setKp=0;
@@ -106,7 +109,7 @@ int main(int argc, char** argv) {
     /* Print user menu*/
     InterfaceMenu();
     
-
+    /* STATE MACHINE */
     while (1) {
 
         switch(user_operation){
@@ -125,27 +128,31 @@ int main(int argc, char** argv) {
             case FAST_STOP_MOTOR:
                 PutString("\n\rUser input-> Paragem rapida (fast stop)");
                 fastStop();
+                MotorStatus=0;
                 user_operation=NO_OPERATION;
                 break;
             case STOP_MOTOR:
                 PutString("\n\rUser input-> Paragem do motor");
                 PWM1_updateDutyCycle(0,2);
+                MotorStatus=0;
                 user_operation=NO_OPERATION;
                 break;
             case RPM_MOTOR_SETPOINT:
                 PutString("\n\rUser input-> Novo setpoint RPM com o valor: ");
                 SendInteger(RPM_reference);
+                MotorStatus=1;
+                PI_Clear();
                 user_operation=NO_OPERATION;
                 break;
             case KP_UPDATE:
                 PutString("\n\rUser input-> Novo Kp com o valor: ");
-                SendInteger(Kp);
+                printf("%6.2f",Kp);
                 UpdateKp(Kp);
                 user_operation=NO_OPERATION;
                 break;
            case KI_UPDATE:
                 PutString("\n\rUser input-> Novo Ki com o valor: ");
-                SendInteger(Ki);
+                printf("%6.2f",Ki);
                 UpdateKi(Ki);
                 user_operation=NO_OPERATION;
                 break;
@@ -157,90 +164,99 @@ int main(int argc, char** argv) {
     return (EXIT_SUCCESS);
 }
 
-
+/* User interface - receiving */
 void __ISR(UART1_VECTOR)UART1ISR(void){
 
-    if(IFS0bits.U1RXIF == 1){
+    if(IFS0bits.U1RXIF == 1){ //when interrupt flag is ON
        
-        uint8_t rcvchar = U1RXREG;
+        uint8_t rcvchar = U1RXREG; //byte received stored in variable
         
-        if(DigitCount==0){
+        if(DigitCount==0){ //if byte received is a command(left,right, stop, fast-stop)
                 
-                PutString("\n\rInput: ");
+                PutString("\n\rInput: "); //output to user interface
             
-                if(rcvchar == 0x52 || rcvchar == 0x72){
-                    user_operation=CLOCKWISE_ROTATION;
+                if(rcvchar == 0x52 || rcvchar == 0x72){ //received 'r'/'R'
+                    user_operation=CLOCKWISE_ROTATION; //new state -> Clockwise rotation
                     PutString("r");
                 }   
 
-                if(rcvchar == 0x4c || rcvchar == 0x6c){
-                    user_operation=COUNTER_CLOCKWISE_ROTATION;
+                if(rcvchar == 0x4c || rcvchar == 0x6c){ //received 'l'/'L'
+                    user_operation=COUNTER_CLOCKWISE_ROTATION;//new state -> Counter-clockwise rotation
                     PutString("l");
                 }   
 
-                if(rcvchar == 0x46 || rcvchar == 0x66){
-                    user_operation=FAST_STOP_MOTOR;
+                if(rcvchar == 0x46 || rcvchar == 0x66){ //received 'f'/'F'
+                    user_operation=FAST_STOP_MOTOR; //new state -> fast stop 
                     PutString("f");
                 }   
 
-                if(rcvchar == 0x30){
-                    user_operation=STOP_MOTOR;
+                if(rcvchar == 0x30 && (setKp==0 && setKi==0)){//received '0' and not setting Kp values (floats)
+                    user_operation=STOP_MOTOR; //new state -> Stop motor
                     PutString("0");
-                    rcvchar=0;
+                    rcvchar=0; //clear rcvchar
                 }
         }
-
-        if(rcvchar == 0x50 || rcvchar == 0x70){
+        
+        /* Kp value update menu now set*/
+        if(rcvchar == 0x50 || rcvchar == 0x70){  //received 'p'/'P'
             PutString("p");
             PutString("\n\rUser input->Introduza valor do parametro Kp do controlador PI ");
-            setKp=1;
+            setKp=1; //Set Kp menu is active
         }   
-        if(rcvchar == 0x49 || rcvchar == 0x69){
+        
+        /* Ki value update menu now set*/
+        if(rcvchar == 0x49 || rcvchar == 0x69){ //received 'i'/'I'
             PutString("i");
             PutString("\n\rUser input->Introduza valor do parametro Ki do controlador PI: ");
-            setKi=1;
-        }
-        if(rcvchar >= 0x30 && rcvchar <= 0x39){
-            rcvDigit[DigitCount]=rcvchar;
-            PutChar(rcvchar);
-            DigitCount++;
+            setKi=1; //Set Ki menu is active
         }
         
-        if (rcvchar == 0x0D){
-            if(DigitCount==0){
+        if(rcvchar == 0x2E && (setKp==1 || setKi==1) && DigitCount>0){ //received "." for Kp or Ki value
+            rcvDigit[DigitCount]=rcvchar; //store on buffer
+            PutChar(rcvchar); //print on user interface
+            DigitCount++; //update buffer index
+        }
+        
+        if(rcvchar >= 0x30 && rcvchar <= 0x39){ //received 0 .. 9
+            rcvDigit[DigitCount]=rcvchar;  //store on buffer
+            PutChar(rcvchar); //print on user interface
+            DigitCount++; //update buffer index
+        }
+        
+        if (rcvchar == 0x0D){ //received "ENTER" key
+            if(DigitCount==0){ //if no inputs
                 PutString("\n\rInput invalido!");
-            }else{
-                pre_validation=atoi(rcvDigit);
-                if(setKp==1){
-
-                    if(pre_validation < MINIMUM_KP || pre_validation > MAXIMUM_KP){
-                      PutString("\n\rInput invalido! Introduzir valor entre [0 .. 100]");
+            }else{ //input processing
+                if(setKp==1){ //if Kp update is set
+                    pre_validation_controller=atof(rcvDigit); //convert buffer to float
+                    if(pre_validation_controller < MINIMUM_KP || pre_validation_controller > MAXIMUM_KP){ //validate value range
+                      PutString("\n\rInput invalido! Introduzir valor entre [0 .. 100]"); //value is not valid
                       user_operation=NO_OPERATION;
                     }else{
-                      Kp=pre_validation;   
-                      user_operation=KP_UPDATE;
+                      Kp=pre_validation_controller;   //valid value, update Kp value
+                      user_operation=KP_UPDATE; //State machine new state
                     }
-                    setKp=0;       
+                    setKp=0; //clear menu flag
 
-                }else if (setKi==1){
-
-                    if(pre_validation < MINIMUM_KI || pre_validation > MAXIMUM_KI){
-                      PutString("\n\rInput invalido! Introduzir valor entre [0 .. 100]");
+                }else if (setKi==1){//if Ki update is set
+                    pre_validation_controller=atof(rcvDigit); //convert buffer to float
+                    if(pre_validation_controller < MINIMUM_KI || pre_validation_controller > MAXIMUM_KI){ //validate value range
+                      PutString("\n\rInput invalido! Introduzir valor entre [0 .. 100]"); //value is not valid
                       user_operation=NO_OPERATION;
                     }else{
-                      Ki=pre_validation;   
-                      user_operation=KI_UPDATE;
+                      Ki=pre_validation_controller;    //valid value, update Ki value
+                      user_operation=KI_UPDATE; //State machine new state
                     }
-                    setKi=0;
+                    setKi=0;  //clear menu flag
 
-                }else{
-
-                  if(pre_validation < MINIMUM_RPM || pre_validation > MAXIMUM_RPM){
-                    PutString("\n\rInput invalido! Introduzir valor entre [10 RPM .. 50 RPM]");
+                }else{ //RPM value
+                  pre_validation_RPM=atoi(rcvDigit); //convert buffer to int
+                  if(pre_validation_RPM < MINIMUM_RPM || pre_validation_RPM > MAXIMUM_RPM){ //validate value range
+                    PutString("\n\rInput invalido! Introduzir valor entre [10 RPM .. 50 RPM]"); //value is not valid
                     user_operation=NO_OPERATION;
                   }else{
-                    RPM_reference=pre_validation;
-                    user_operation=RPM_MOTOR_SETPOINT;
+                    RPM_reference=pre_validation_RPM; //valid value, update RPM value (setpoint)
+                    user_operation=RPM_MOTOR_SETPOINT; //State machine new state
                   }
 
                 }
@@ -256,21 +272,21 @@ void __ISR(UART1_VECTOR)UART1ISR(void){
 
 void __ISR (INT1_VECTOR) ExtInt1ISR(void)
 {
-    CountPulses++;
+    CountPulses++; //Count rising edges number 
     
     if(PORTEbits.RE7 == 1){//If RE7 == 1, Clockwise rotation
-        if(abs(AnglePosition)==FULL_ROTATION){
-            AnglePosition=0;    
+        if(abs(AnglePosition)==FULL_ROTATION){ 
+            AnglePosition=0;    //reset angular position on full turn
         }else{
-            AnglePosition+=ANGULAR_INCREMENT;              
+            AnglePosition+=ANGULAR_INCREMENT; //increment angular position on clockwise rotation
         }
         
     } 
     else if(PORTEbits.RE7 == 0){//If RE7 == 0, Counter-clockwise rotation
         if(abs(AnglePosition)==0.00){
-            AnglePosition=FULL_ROTATION;    
+            AnglePosition=FULL_ROTATION;    //reset angular position on full turn
         }else{
-            AnglePosition-=ANGULAR_INCREMENT;              
+            AnglePosition-=ANGULAR_INCREMENT; //decrement angular position on counter-clockwise rotation         
         }
     }
  
@@ -282,11 +298,13 @@ void __ISR(TIMER3_VECTOR)Timer3ISR(void){
     
     UserOutputFlag++; //Increment variable every 0.1s
     
-    RPM=(uint32_t)(CountPulses*60*H_SAMPLE)/(SHAFT_PULSES);
+    RPM=(uint32_t)(CountPulses*60*H_SAMPLE)/(SHAFT_PULSES); //calculate RPM
     
-    PI_Execute(RPM_reference,RPM);
+    if(MotorStatus == 1){
+        PI_Execute(RPM_reference,RPM); //PI controller with RPM obtained        
+    }
     
-    CountPulses=0;
+    CountPulses=0; //reset count of rising edges
     
     if(UserOutputFlag==COUNT_TIMER_USER_INTERFACE) //Print to user at 1s (10x0.1))
     {
@@ -294,6 +312,8 @@ void __ISR(TIMER3_VECTOR)Timer3ISR(void){
         
         if(DigitCount == 0 && setKi==0 && setKp==0){ //only print if no more user inputs happening
             // to prevent clustering of the interface
+            
+            /* Print to user interface */
             PutString("\n\rNova leitura-> RPM: ");
             SendInteger(RPM);
             PutString("\t\t Angular Position: ");
@@ -302,5 +322,5 @@ void __ISR(TIMER3_VECTOR)Timer3ISR(void){
     }
     
     
-    IFS0bits.T3IF = 0;
+    IFS0bits.T3IF = 0; //reset interrupt flag
 }

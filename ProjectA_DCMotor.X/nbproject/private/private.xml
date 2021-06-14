@@ -5,11 +5,9 @@
         <group>
             <file>file:/C:/Users/leand/OneDrive/Ambiente%20de%20Trabalho/SIE_Cod/SIE/ProjectA_DCMotor.X/Src/PIController.c</file>
             <file>file:/C:/Users/leand/OneDrive/Ambiente%20de%20Trabalho/SIE_Cod/SIE/ProjectA_DCMotor.X/Src/uart.c</file>
-            <file>file:/C:/Users/leand/OneDrive/Ambiente%20de%20Trabalho/SIE_Cod/SIE/ProjectA_DCMotor.X/includes/pwm.h</file>
+            <file>file:/C:/Users/leand/OneDrive/Ambiente%20de%20Trabalho/SIE_Cod/SIE/ProjectA_DCMotor.X/includes/uart.h</file>
             <file>file:/C:/Users/leand/OneDrive/Ambiente%20de%20Trabalho/SIE_Cod/SIE/ProjectA_DCMotor.X/Src/main.c</file>
-            <file>file:/C:/Users/leand/OneDrive/Ambiente%20de%20Trabalho/SIE_Cod/SIE/ProjectA_DCMotor.X/Src/timers.c</file>
             <file>file:/C:/Users/leand/OneDrive/Ambiente%20de%20Trabalho/SIE_Cod/SIE/ProjectA_DCMotor.X/Src/general.c</file>
-            <file>file:/C:/Users/leand/OneDrive/Ambiente%20de%20Trabalho/SIE_Cod/SIE/ProjectA_DCMotor.X/Src/pwm.c</file>
         </group>
     </open-files>
 </project-private>
