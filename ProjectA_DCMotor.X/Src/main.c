@@ -89,7 +89,7 @@ int main(int argc, char** argv) {
  
     
     //Init values
-    PWM1_updateDutyCycle(0,2); //Set PWM to start with 50 duty-cycle
+    PWM1_updateDutyCycle(0,2); //Set PWM to start with 0% duty-cycle
     MotorStatus=0;
     setRotationRight(); 
     setKi=0;
@@ -98,7 +98,7 @@ int main(int argc, char** argv) {
     UserOutputFlag=0;
     CountPulses=0;
     AnglePosition=0.00;
-    RPM_reference=50;
+    RPM_reference=0;
     user_operation=NO_OPERATION;
       
     /* UART and INT init*/
