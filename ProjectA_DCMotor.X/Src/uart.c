@@ -1,6 +1,6 @@
 /* 
  * File:   uart.c
- * Author: Paulo Pedreiras
+ * Author: Paulo Pedreiras (New functions added by the group)
  *
  * Created on Jan 28, 2019
  * MPLAB X IDE v5.10 + XC32 v2.15

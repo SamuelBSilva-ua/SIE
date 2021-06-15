@@ -1,6 +1,25 @@
+/* 
+ * File:   general.c
+ * Author: Leandro Alexandrino, 74342
+ * Author: Samuel Silva, 80773
+ *
+ * 
+*/
+
 #include "../includes/general.h"
 #include <xc.h>
 
+
+/********************************************************************
+* Function: 	PinConfig()
+* 
+* Input: 		-
+* 
+* Returns:      -
+* 
+* Overview:     Initializes all the Pins needed.
+* 
+********************************************************************/
 void PinConfig(void){
     
     TRISAbits.TRISA3 = 0; //LED on pic
@@ -13,6 +32,18 @@ void PinConfig(void){
     TRISEbits.TRISE8 = 1;  //RE8 set as input  - Channel A Motor encoder    
 
 }
+
+
+/********************************************************************
+* Function: 	InterfaceMenu()
+* 
+* Input: 		-
+* 
+* Returns:      -
+* 
+* Overview:     Prints the User interface menu.
+* 
+********************************************************************/
 void InterfaceMenu(void){
     PutString("------------------ Projeto Motor DC ----------------------- \n\n\r");
     PutString("Definir o sentido de rotacao para a direita: introduzir r/R \n\r");

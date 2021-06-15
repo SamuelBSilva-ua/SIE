@@ -1,3 +1,11 @@
+/* 
+ * File:   Motor.h
+ * Author: Samuel
+ *
+ * Created on 24 de Maio de 2021, 15:54
+ */
+
+#include <xc.h>
 #include <proc/p32mx795f512l.h>
 
 #include "../includes/Motor.h"
@@ -50,29 +58,4 @@ void setRotationLeft(){
 void fastStop(){
     LATEbits.LATE5 = 0;
     LATEbits.LATE6 = 0;
-}
-
-
-/********************************************************************
-* Function: 	setRPM()
-* Precondition: -
-* Input: 		- setpoint
-*               - rpm desired
-* Returns:      
- *              
-* 
-* Overview:     set rpm desired
-* 
-********************************************************************/	
-void setRPM(uint8_t setpoint, uint8_t rpm){
-    uint8_t dif=0;
-    if(rpm > setpoint){ //decrease rpm
-        dif=rpm-setpoint;
-        OC1RS=1.02*(dif);
-    }
-    else if(rpm < setpoint){ //increase rpm
-        dif=setpoint-rpm;
-        //duty*0.098*(dif)
-    }
-    
 }

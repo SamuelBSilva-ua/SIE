@@ -3,8 +3,9 @@
 #include "../includes/general.h"
 #include "../includes/timers.h"
 #include "../includes/uart.h"
+#include "../includes/Motor.h"
 #include "../includes/external_int.h"
-#include"../includes/PIController.h"
+#include "../includes/PIController.h"
 #include <xc.h>
 #include <stdint.h>
 #include <string.h>

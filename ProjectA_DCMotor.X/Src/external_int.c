@@ -18,7 +18,17 @@
 
 
 
-
+/********************************************************************
+* Function: 	InitExternalInterrupt1()
+* Precondition: -
+* Input: 		-
+* 
+* Returns:      
+ *              
+* 
+* Overview:     Inits External Interrupt 1.
+* 
+********************************************************************/	
 void InitExternalInterrupt1(void){
     
     IEC0bits.INT1IE = 0; // Enable Int1 interrupts

@@ -1,12 +1,9 @@
 /* 
- * File:   timers.c
+ * File:   pwm.c
  * Author: Leandro Alexandrino, 74342
  * Author: Samuel Silva, 80773
  *
  * 
- * Overview:
- *          Functions to handle PWM.    
- *
  */
 
 #include <xc.h>
@@ -70,7 +67,7 @@ int PWM1Init(uint8_t timer_number)
 * Returns:      PWM1_SUCCESS if success.
 *               PWM1_XXXX if error (check pwm.h)
 * 
-* Overview:     Initializes the PWM module.
+* Overview:     Updates PWM duty-cycle.
 * 
 ********************************************************************/	
 int PWM1_updateDutyCycle(uint8_t dutycycle,uint8_t timer_number)
@@ -122,7 +119,7 @@ int PWM1_updateDutyCycle(uint8_t dutycycle,uint8_t timer_number)
 * Returns:      PWM1_SUCCESS if success.
 *               PWM1_XXXX if error (check pwm.h)
 * 
-* Overview:     Initializes the PWM module.
+* Overview:     Adjustment to the OC1RS for PI controller.
 * 
 ********************************************************************/	
 int PWM1_adjustment(int adjustment, uint8_t timer_number)
